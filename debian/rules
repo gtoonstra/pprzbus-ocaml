@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+include /usr/share/ocaml/ocamlvars.mk
+
+DEB_DESTDIR = $(CURDIR)/debian/ivy-ocaml
+DEB_OCAML_DESTDIR = $(DEB_DESTDIR)$(OCAML_STDLIB_DIR)
+export OCAMLFIND_DESTDIR = $(DEB_OCAML_DESTDIR)
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@ --with ocaml
+
+override_dh_auto_install :
+	mkdir -p $(DEB_OCAML_DESTDIR)
+	mkdir -p $(DEB_OCAML_DESTDIR)/stublibs
+	$(MAKE) DESTDIR=$(DEB_DESTDIR) install
+
+.PHONY: override_dh_auto_install

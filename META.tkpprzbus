@@ -1,0 +1,4 @@
+version="1.3.1"
+description="bindings for the Pprzbus software bus using Tcl/Tk"
+archive(byte)="tkpprzbus-ocaml.cma"
+archive(native)="tkpprzbus-ocaml.cmxa"
