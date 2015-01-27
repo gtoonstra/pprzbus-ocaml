@@ -30,7 +30,7 @@ val start : string -> unit
 (** [start bus] starts the connection to machine/network/port specified in
 [bus]. Syntax for [bus] is ["IPaddress:port"] *)
 
-val bind : cb -> string -> binding
+val bind : string -> cb -> string -> binding
 (** [bind cb regexp] binds callback [cb] to messages matching the [regexp]
 regular expression. [cb] will be called with the array of matching groups
 defined in [regexp]. *)
@@ -48,7 +48,7 @@ val send_data : string -> 'a -> unit
 (** [send_data tag value] marshals [value] into a string and sends it with
 [tag] over the IVY bus *)
 
-val data_bind : (client -> 'a -> unit) -> string -> binding
+val data_bind : string -> (client -> 'a -> unit) -> string -> binding
 (** [data_bind cb tag] binds [cb] to IVY messages sent with [send_data] and
 tagged with [tag]. This operation IS NOT type safe.*)
 

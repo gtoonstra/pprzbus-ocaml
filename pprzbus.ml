@@ -23,10 +23,10 @@ let init = fun name ready ccb ->
 
 
 external start : string -> unit = "ivy_start"
-external ext_bind : string -> string -> binding = "ivy_bindMsg"
+external ext_bind : string -> string -> string -> binding = "ivy_bindMsg"
 
-let bind = fun (cb:cb) regexp ->
-  ext_bind (cb_register cb) regexp
+let bind = fun srcfilter (cb:cb) regexp ->
+  ext_bind srcfilter (cb_register cb) regexp
 
 external unbind : binding -> unit = "ivy_unbindMsg"
 
@@ -76,6 +76,7 @@ let send_data = fun tag value ->
   let s = hexa_of_string (Marshal.to_string value []) in
   send (Printf.sprintf "%s %s %s" marshal_tag tag s)
 
-let data_bind = fun cb tag ->
+let data_bind = fun filter cb tag ->
   let r = Printf.sprintf "%s %s (.*)" marshal_tag tag in
-  bind (fun c a -> cb c (Marshal.from_string (string_of_hexa a.(0)) 0)) r
+  bind filter (fun c a -> cb c (Marshal.from_string (string_of_hexa a.(0)) 0)) r
+

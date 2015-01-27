@@ -57,10 +57,10 @@ void ClosureCallback(IvyClientPtr app, void *closure, int argc, char **argv)
   callback2(*(value*)closure, Val_long(app), copy_string_array((char const **)t));
 }
 
-value ivy_bindMsg(value cb_name, value regexp)
+value ivy_bindMsg(value src_filter, value cb_name, value regexp)
 {
   value * closure = caml_named_value(String_val(cb_name));
-  MsgRcvPtr id = IvyBindMsg(ClosureCallback, (void*)closure, "%s", String_val(regexp));
+  MsgRcvPtr id = IvyBindMsg(String_val(src_filter), ClosureCallback, (void*)closure, "%s", String_val(regexp));
   return Val_long(id);
 }
 
